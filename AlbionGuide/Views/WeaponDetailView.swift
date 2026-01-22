@@ -1,26 +1,27 @@
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct WeaponDetailView: View {
     @StateObject private var viewModel: WeaponDetailViewModel
     @EnvironmentObject private var storage: LocalStorageService
     @State private var selectedTab = 0
-    
+
     init(weapon: Weapon) {
         _viewModel = StateObject(wrappedValue: WeaponDetailViewModel(weapon: weapon))
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 weaponHeader
-                
-                Picker("정보", selection: $selectedTab) {
-                    Text("스킬").tag(0)
-                    Text("스탯").tag(1)
+
+                Picker(String(localized: "info"), selection: $selectedTab) {
+                    Text(String(localized: "skills")).tag(0)
+                    Text(String(localized: "stats")).tag(1)
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
-                
+
                 if viewModel.isLoading {
                     ProgressView()
                         .padding(.top, 40)
@@ -39,7 +40,7 @@ struct WeaponDetailView: View {
             .padding(.bottom, 20)
         }
         .background(Color(.systemGroupedBackground))
-        .navigationTitle(viewModel.weapon.name)
+        .navigationTitle(viewModel.weapon.localizedName)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -55,7 +56,7 @@ struct WeaponDetailView: View {
             storage.addRecentViewed(weaponId: viewModel.weapon.id)
         }
     }
-    
+
     private var weaponHeader: some View {
         VStack(spacing: 12) {
             AsyncImage(url: URL(string: viewModel.weapon.icon)) { phase in
@@ -75,13 +76,13 @@ struct WeaponDetailView: View {
             .background(Color(.secondarySystemGroupedBackground))
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .shadow(color: .black.opacity(0.1), radius: 8, y: 4)
-            
-            Text(viewModel.weapon.name)
+
+            Text(viewModel.weapon.localizedName)
                 .font(.title2.bold())
-            
+
             HStack(spacing: 12) {
                 TierBadge(tier: viewModel.weapon.tierNumber, enchantment: viewModel.weapon.enchantment)
-                
+
                 Label("\(viewModel.weapon.itemPower)", systemImage: "bolt.fill")
                     .font(.subheadline)
                     .foregroundStyle(.orange)
@@ -91,7 +92,7 @@ struct WeaponDetailView: View {
         .frame(maxWidth: .infinity)
         .background(Color(.secondarySystemGroupedBackground))
     }
-    
+
     private var spellsContent: some View {
         VStack(spacing: 16) {
             ForEach(viewModel.spellSlots) { slot in
@@ -100,7 +101,7 @@ struct WeaponDetailView: View {
         }
         .padding(.horizontal)
     }
-    
+
     private var statsContent: some View {
         VStack(spacing: 16) {
             if !viewModel.availableEnchantments.isEmpty {
@@ -111,7 +112,7 @@ struct WeaponDetailView: View {
                                 Button {
                                     viewModel.selectedEnchantment = ench
                                 } label: {
-                                    Text(ench == 0 ? "기본" : ".\(ench)")
+                                    Text(ench == 0 ? String(localized: "base") : ".\(ench)")
                                         .font(.subheadline.bold())
                                         .padding(.horizontal, 16)
                                         .padding(.vertical, 8)
@@ -123,7 +124,7 @@ struct WeaponDetailView: View {
                         }
                         .padding(.horizontal)
                     }
-                    
+
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 8) {
                             ForEach(viewModel.qualities, id: \.self) { quality in
@@ -144,7 +145,7 @@ struct WeaponDetailView: View {
                     }
                 }
             }
-            
+
             if let stats = viewModel.currentStats {
                 VStack(spacing: 8) {
                     ForEach(stats, id: \.name) { stat in
@@ -156,24 +157,24 @@ struct WeaponDetailView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .padding(.horizontal)
             } else {
-                Text("스탯 정보가 없습니다")
+                Text(String(localized: "no_stats"))
                     .foregroundStyle(.secondary)
                     .padding()
             }
         }
     }
-    
+
     private func qualityName(_ quality: String) -> String {
         switch quality {
-        case "Normal": return "일반"
-        case "Good": return "좋음"
-        case "Outstanding": return "뛰어남"
-        case "Excellent": return "훌륭함"
-        case "Masterpiece": return "걸작"
+        case "Normal": return String(localized: "quality_normal")
+        case "Good": return String(localized: "quality_good")
+        case "Outstanding": return String(localized: "quality_outstanding")
+        case "Excellent": return String(localized: "quality_excellent")
+        case "Masterpiece": return String(localized: "quality_masterpiece")
         default: return quality
         }
     }
-    
+
     private func qualityColor(_ quality: String) -> Color {
         switch quality {
         case "Normal": return .gray
@@ -189,13 +190,13 @@ struct WeaponDetailView: View {
 struct SpellSlotSection: View {
     let slot: SpellSlot
     @State private var expandedSpell: Int?
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(slotName)
                 .font(.headline)
                 .foregroundStyle(.secondary)
-            
+
             ForEach(slot.spells) { spell in
                 SpellCardView(spell: spell, isExpanded: expandedSpell == spell.id) {
                     withAnimation(.spring(response: 0.3)) {
@@ -205,13 +206,13 @@ struct SpellSlotSection: View {
             }
         }
     }
-    
+
     var slotName: String {
         switch slot.slot {
-        case "First Slot": return "Q 스킬"
-        case "Second Slot": return "W 스킬"
-        case "Third Slot": return "E 스킬"
-        case "Passive": return "패시브"
+        case "First Slot": return String(localized: "q_skill")
+        case "Second Slot": return String(localized: "w_skill")
+        case "Third Slot": return String(localized: "e_skill")
+        case "Passive": return String(localized: "passive")
         default: return slot.slot
         }
     }
@@ -221,7 +222,7 @@ struct SpellCardView: View {
     let spell: Spell
     let isExpanded: Bool
     let onTap: () -> Void
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Button(action: onTap) {
@@ -241,12 +242,12 @@ struct SpellCardView: View {
                     .frame(width: 48, height: 48)
                     .background(Color(.tertiarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-                    
+
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(spell.name)
+                        Text(spell.localizedName)
                             .font(.headline)
                             .foregroundStyle(.primary)
-                        
+
                         HStack(spacing: 8) {
                             ForEach(spell.attributes.prefix(3), id: \.name) { attr in
                                 Text("\(attr.name): \(attr.value)")
@@ -255,9 +256,9 @@ struct SpellCardView: View {
                             }
                         }
                     }
-                    
+
                     Spacer()
-                    
+
                     Image(systemName: "chevron.down")
                         .font(.caption)
                         .foregroundStyle(.tertiary)
@@ -265,24 +266,24 @@ struct SpellCardView: View {
                 }
             }
             .buttonStyle(.plain)
-            
+
             if isExpanded {
                 VStack(alignment: .leading, spacing: 12) {
                     if let previewURL = spell.preview, !previewURL.isEmpty {
-                        AsyncImage(url: URL(string: previewURL)) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                            default:
-                                EmptyView()
-                            }
+                        WebImage(url: URL(string: previewURL)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        } placeholder: {
+                            ProgressView()
+                                .frame(height: 150)
                         }
+                        .indicator(.activity)
+                        .transition(.fade(duration: 0.3))
                         .frame(maxWidth: .infinity)
                     }
-                    
+
                     VStack(spacing: 8) {
                         ForEach(spell.attributes, id: \.name) { attr in
                             HStack {
@@ -298,7 +299,7 @@ struct SpellCardView: View {
                     .padding()
                     .background(Color(.tertiarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-                    
+
                     Text(cleanDescription(spell.description))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -311,7 +312,7 @@ struct SpellCardView: View {
         .background(Color(.secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
-    
+
     private func cleanDescription(_ text: String) -> String {
         text
             .replacingOccurrences(of: "\\n", with: "\n")
@@ -323,15 +324,15 @@ struct SpellCardView: View {
 struct StatRow: View {
     let name: String
     let value: String
-    
+
     var body: some View {
         HStack {
             Text(name)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
-            
+
             Spacer()
-            
+
             Text(value)
                 .font(.subheadline.bold())
                 .foregroundStyle(.primary)

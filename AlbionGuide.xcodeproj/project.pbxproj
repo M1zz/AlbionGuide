@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C3B2E742F21FDDB00E535DB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9C3B2E732F21FDDB00E535DB /* Localizable.xcstrings */; };
 		A1000001229F0001000A0001 /* AlbionGuideApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002229F0002000A0002 /* AlbionGuideApp.swift */; };
 		A1000003229F0003000A0003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000004229F0004000A0004 /* Assets.xcassets */; };
 		A1000005229F0005000A0005 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006229F0006000A0006 /* Models.swift */; };
@@ -20,9 +21,11 @@
 		A1000015229F0015000A0015 /* BuildViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000016229F0016000A0016 /* BuildViews.swift */; };
 		A1000017229F0017000A0017 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000018229F0018000A0018 /* FavoritesView.swift */; };
 		A1000019229F0019000A0019 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100001A229F001A000A001A /* SettingsView.swift */; };
+		B1000001229F0001000B0001 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B1000002229F0002000B0002 /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C3B2E732F21FDDB00E535DB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A1000002229F0002000A0002 /* AlbionGuideApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbionGuideApp.swift; sourceTree = "<group>"; };
 		A1000004229F0004000A0004 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1000006229F0006000A0006 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
@@ -44,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1000001229F0001000B0001 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +71,7 @@
 				A1000022229F0022000A0022 /* ViewModels */,
 				A1000023229F0023000A0023 /* Views */,
 				A1000004229F0004000A0004 /* Assets.xcassets */,
+				9C3B2E732F21FDDB00E535DB /* Localizable.xcstrings */,
 			);
 			path = AlbionGuide;
 			sourceTree = "<group>";
@@ -134,6 +139,9 @@
 			dependencies = (
 			);
 			name = AlbionGuide;
+			packageProductDependencies = (
+				B1000002229F0002000B0002 /* SDWebImageSwiftUI */,
+			);
 			productName = AlbionGuide;
 			productReference = A100001B229F001B000A001B /* AlbionGuide.app */;
 			productType = "com.apple.product-type.application";
@@ -155,7 +163,7 @@
 			};
 			buildConfigurationList = A1000029229F0029000A0029 /* Build configuration list for PBXProject "AlbionGuide" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -163,6 +171,9 @@
 				ko,
 			);
 			mainGroup = A100001D229F001D000A001D;
+			packageReferences = (
+				B1000003229F0003000B0003 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = A100001F229F001F000A001F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -177,6 +188,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C3B2E742F21FDDB00E535DB /* Localizable.xcstrings in Resources */,
 				A1000003229F0003000A0003 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,6 +277,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -321,6 +334,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -405,6 +419,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B1000003229F0003000B0003 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B1000002229F0002000B0002 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1000003229F0003000B0003 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A1000028229F0028000A0028 /* Project object */;
 }

@@ -4,7 +4,7 @@ struct SettingsView: View {
     @EnvironmentObject private var storage: LocalStorageService
     @State private var showingClearAlert = false
     @State private var showingClearCacheAlert = false
-    
+
     var body: some View {
         NavigationStack {
             List {
@@ -13,7 +13,7 @@ struct SettingsView: View {
                         Image(systemName: "shield.lefthalf.filled")
                             .font(.largeTitle)
                             .foregroundStyle(.orange)
-                        
+
                         VStack(alignment: .leading) {
                             Text("Albion Guide")
                                 .font(.headline)
@@ -24,66 +24,66 @@ struct SettingsView: View {
                     }
                     .padding(.vertical, 8)
                 }
-                
-                Section("통계") {
-                    SettingsStatRow(title: "즐겨찾기 무기", value: "\(storage.favoriteWeaponIds.count)개")
-                    SettingsStatRow(title: "즐겨찾기 방어구", value: "\(storage.favoriteArmorIds.count)개")
-                    SettingsStatRow(title: "저장된 빌드", value: "\(storage.builds.count)개")
-                    SettingsStatRow(title: "최근 본 아이템", value: "\(storage.recentViewedWeaponIds.count)개")
+
+                Section(String(localized: "statistics")) {
+                    SettingsStatRow(title: String(localized: "favorite_weapons"), value: String(localized: "\(storage.favoriteWeaponIds.count) items"))
+                    SettingsStatRow(title: String(localized: "favorite_armor"), value: String(localized: "\(storage.favoriteArmorIds.count) items"))
+                    SettingsStatRow(title: String(localized: "saved_builds"), value: String(localized: "\(storage.builds.count) items"))
+                    SettingsStatRow(title: String(localized: "recently_viewed"), value: String(localized: "\(storage.recentViewedWeaponIds.count) items"))
                 }
-                
-                Section("데이터 관리") {
+
+                Section(String(localized: "data_management")) {
                     Button {
                         showingClearCacheAlert = true
                     } label: {
-                        Label("캐시 초기화", systemImage: "arrow.triangle.2.circlepath")
+                        Label(String(localized: "clear_cache"), systemImage: "arrow.triangle.2.circlepath")
                     }
-                    
+
                     Button(role: .destructive) {
                         showingClearAlert = true
                     } label: {
-                        Label("모든 데이터 초기화", systemImage: "trash")
+                        Label(String(localized: "clear_all_data"), systemImage: "trash")
                     }
                 }
-                
-                Section("정보") {
+
+                Section(String(localized: "information")) {
                     Link(destination: URL(string: "https://openalbion.com")!) {
                         Label("OpenAlbion API", systemImage: "link")
                     }
-                    
+
                     Link(destination: URL(string: "https://albiononline.com")!) {
-                        Label("Albion Online 공식 사이트", systemImage: "globe")
+                        Label(String(localized: "official_website"), systemImage: "globe")
                     }
-                    
+
                     Link(destination: URL(string: "https://wiki.albiononline.com")!) {
                         Label("Albion Online Wiki", systemImage: "book")
                     }
                 }
-                
+
                 Section {
-                    Text("이 앱은 Sandbox Interactive GmbH와 관련이 없는 비공식 팬 앱입니다. Albion Online 및 관련 로고는 Sandbox Interactive GmbH의 상표입니다.")
+                    Text(String(localized: "disclaimer"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
             }
-            .navigationTitle("설정")
-            .alert("캐시 초기화", isPresented: $showingClearCacheAlert) {
-                Button("취소", role: .cancel) { }
-                Button("초기화") {
+            .navigationTitle(String(localized: "settings"))
+            .alert(String(localized: "clear_cache"), isPresented: $showingClearCacheAlert) {
+                Button(String(localized: "cancel"), role: .cancel) { }
+                Button(String(localized: "reset")) {
                     Task {
                         await OpenAlbionAPI.shared.clearCache()
                     }
                 }
             } message: {
-                Text("캐시된 데이터를 초기화하고 새로 불러옵니다.")
+                Text(String(localized: "clear_cache_message"))
             }
-            .alert("모든 데이터 초기화", isPresented: $showingClearAlert) {
-                Button("취소", role: .cancel) { }
-                Button("초기화", role: .destructive) {
+            .alert(String(localized: "clear_all_data"), isPresented: $showingClearAlert) {
+                Button(String(localized: "cancel"), role: .cancel) { }
+                Button(String(localized: "reset"), role: .destructive) {
                     storage.clearAll()
                 }
             } message: {
-                Text("즐겨찾기, 빌드, 최근 본 아이템 등 모든 저장된 데이터가 삭제됩니다.")
+                Text(String(localized: "clear_all_data_message"))
             }
         }
     }
@@ -92,7 +92,7 @@ struct SettingsView: View {
 struct SettingsStatRow: View {
     let title: String
     let value: String
-    
+
     var body: some View {
         HStack {
             Text(title)
