@@ -250,7 +250,7 @@ struct SpellCardView: View {
 
                         HStack(spacing: 8) {
                             ForEach(spell.attributes.prefix(3), id: \.name) { attr in
-                                Text("\(attr.name): \(attr.value)")
+                                Text("\(attr.localizedName): \(attr.value)")
                                     .font(.caption2)
                                     .foregroundStyle(.secondary)
                             }
@@ -287,7 +287,7 @@ struct SpellCardView: View {
                     VStack(spacing: 8) {
                         ForEach(spell.attributes, id: \.name) { attr in
                             HStack {
-                                Text(attr.name)
+                                Text(attr.localizedName)
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                                 Spacer()
@@ -300,7 +300,7 @@ struct SpellCardView: View {
                     .background(Color(.tertiarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
 
-                    Text(cleanDescription(spell.description))
+                    Text(cleanDescription(spell.localizedDescription))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)

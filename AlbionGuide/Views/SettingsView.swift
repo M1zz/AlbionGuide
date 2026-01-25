@@ -14,12 +14,20 @@ struct SettingsView: View {
                             .font(.largeTitle)
                             .foregroundStyle(.orange)
 
-                        VStack(alignment: .leading) {
-                            Text("Albion Guide")
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(String(localized: "app_name"))
                                 .font(.headline)
                             Text("v1.0.0")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
+                            Text(String(localized: "unofficial_fan_app"))
+                                .font(.caption2)
+                                .fontWeight(.medium)
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 2)
+                                .background(Color.orange.opacity(0.8))
+                                .clipShape(Capsule())
                         }
                     }
                     .padding(.vertical, 8)

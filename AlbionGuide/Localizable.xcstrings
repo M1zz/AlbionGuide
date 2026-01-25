@@ -49,9 +49,6 @@
         }
       }
     },
-    "Albion Guide" : {
-
-    },
     "Albion Online Wiki" : {
 
     },
@@ -67,6 +64,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "전체"
+          }
+        }
+      }
+    },
+    "app_name" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Albion Gear"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알비온 장비"
           }
         }
       }
@@ -1180,6 +1193,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "티어 필터"
+          }
+        }
+      }
+    },
+    "unofficial_fan_app" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unofficial Fan App"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "비공식 팬 앱"
           }
         }
       }
